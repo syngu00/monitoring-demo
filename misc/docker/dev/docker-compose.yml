@@ -1,0 +1,23 @@
+version: '3.6'
+
+services:
+  iron-vault-dev:
+    image: postgres:12.5-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "me"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - "iron-vault-data:/var/lib/postgresql/data"
+    networks:
+      - rainbow-bridge
+
+networks:
+  rainbow-bridge-dev:
+    driver: bridge
+
+volumes:
+  iron-vault-dev-data:
+    driver: local

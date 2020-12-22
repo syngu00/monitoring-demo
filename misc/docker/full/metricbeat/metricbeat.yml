@@ -1,0 +1,78 @@
+#metricbeat.config:
+#  modules:
+#    path: ${path.config}/modules.d/*.yml
+#    reload.enabled: false
+
+metricbeat.modules:
+  - module: system
+    metricsets:
+      - cpu             # CPU usage
+      - load            # CPU load averages
+      - memory          # Memory usage
+      - network         # Network IO
+      - process         # Per process metrics
+      - process_summary # Process summary
+      - uptime          # System Uptime
+      - socket_summary  # Socket summary
+      - diskio         # Disk IO
+    enabled: true
+    period: 30s
+    processes: ['.*']
+    cpu.metrics:  ["percentages"]  # The other available options are normalized_percentages and ticks.
+    core.metrics: ["percentages"]  # The other available option is ticks.
+  - module: docker
+    metricsets:
+      - "container"
+      - "cpu"
+      - "diskio"
+      - "event"
+      - "healthcheck"
+      - "info"
+      - "image"
+      - "memory"
+      - "network"
+    hosts: [ "unix:///var/run/docker.sock" ]
+    period: 30s
+    enabled: true
+  - module: postgresql
+    enabled: true
+    metricsets:
+      - database
+      - bgwriter
+      - activity
+      - statement
+    hosts: [ "postgres://iron-vault:5432?sslmode=disable" ]
+    username: me
+    password: password
+  - module: nginx
+    metricsets: [ "stubstatus" ]
+    enabled: true
+    period: 10s
+    hosts: [ "http://edge-service:8080" ]
+    server_status_path: "nginx_status"
+  - module: elasticsearch
+    metricsets:
+      - node
+      - node_stats
+      - index
+      - index_recovery
+      - index_summary
+      - shard
+      - ml_job
+    period: 10s
+    hosts: [ "http://elasticsearch:9200" ]
+    username: "elastic"
+    password: "password"
+
+setup:
+  kibana:
+    host: "kibana:5601"
+    username: "elastic"
+    password: "password"
+  dashboards:
+    enabled: true
+
+output.elasticsearch:
+  hosts: '[elasticsearch]'
+  username: elastic
+  password: password
