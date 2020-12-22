@@ -34,8 +34,7 @@ Just simple download and start JMeter and open the `misc/MonitoringAppTest.jmx` 
 
 ## Some reading material
 
-https://www.elastic.co/apm
-https://www.elastic.co/guide/en/apm/agent/java/current/index.html
-
-https://www.elastic.co/beats/
-https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-modules.html
+- https://www.elastic.co/apm
+- https://www.elastic.co/guide/en/apm/agent/java/current/index.html
+- https://www.elastic.co/beats/
+- https://www.elastic.co/guide/en/beats/metricbeat/current/metricbeat-modules.html
